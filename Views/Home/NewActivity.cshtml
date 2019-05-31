@@ -1,0 +1,54 @@
+<!-- @using CsharpBelt.Models; -->
+@model Activityy
+
+<partial name="_Header"></partial>
+
+<script type="text/javascript"> 
+    function generateDuration()
+    {
+        document.getElementById('fullDuration').innerText =
+            document.getElementById('number').value + ' ' +
+            document.getElementById('measure').value;
+    }
+</script>
+
+<h3>Create an Activity</h3>
+<span>All fields required*</span>
+
+<form asp-action="CreateEvent" asp-controller="Home" method="post" oninput="durationvalue.value = number.value + ' ' + measure.value">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label>Time:</label>
+        <input asp-for="Time" type="time" value="12:00" class="form-control" />
+        <span asp-validation-for="Time"></span>
+    </div>
+    <div class="form-group">
+        <label>Date:</label>
+        <input asp-for="Date" type="date" class="form-control" />
+        <span asp-validation-for="Date"></span>
+    </div>
+    <div class="form-group form-inline">
+        <label>Duration (Enter a number):</label>
+        <input id="number" type="number" value="1" min="1" class="form-control" onkeyup="generateDuration()">
+        <select id="measure" class="form-control" onkeyup="generateDuration()">
+            <option value="Minutes">Minutes</option>
+            <option value="Hours">Hours</option>
+            <option value="Days">Days</option>
+        </select> -->
+        <input asp-for="Duration" id=durationvalue>
+        <span asp-validation-for="Duration"></span>  
+    </div>
+    
+    <div class="form-group">
+        <label>Description:</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description"></span>
+    </div>
+    <span style="color : red">*Have you completed all fields?</span><br>
+    <input type="submit" value="Create Activity" class="btn btn-success" />
+</form>
+<br>

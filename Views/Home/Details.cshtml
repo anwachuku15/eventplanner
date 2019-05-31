@@ -1,0 +1,77 @@
+@using CsharpBelt.Models;
+@using System;
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
+@model Activityy;
+
+
+<h1>@Model.Name</h1>
+
+@{
+    bool isGoing = false;
+    @foreach(var p in ViewBag.num)
+    { 
+        if(p.UserId == ViewBag.User.UserId)
+        {
+            isGoing = true;
+            break; 
+        } 
+    }
+    @if(isGoing)
+    {
+        <a href="/leave/@Model.ActivityId" class="btn btn-warning btn-xs">Leave</a>
+    }
+    else
+    {
+        <a href="/join/@Model.ActivityId" class="btn btn-primary btn-xs">Join</a>
+    }
+    
+}
+
+
+
+    
+
+
+
+<div class="inline">
+<h3>
+    Event Coordinator:       
+    @foreach(var i in ViewBag.Users)
+    {
+        if(i.UserId == Model.CoordinatorId)
+        {
+            @i.Name
+        }
+    }
+
+</h3>
+
+</div>
+
+<h3>Activity Description</h3>
+<p>@Model.Description</p>
+<br>
+<br>
+<br>
+
+
+
+
+<h3>Participants</h3>
+
+<ul>
+    
+    @foreach(var p in ViewBag.num)
+    {
+        
+        @foreach(var i in ViewBag.Users)
+        {
+            if(i.UserId == p.UserId)
+            {
+                string person = i.Name;
+                <li>@person</li>
+            }
+        }
+    }
+</ul>

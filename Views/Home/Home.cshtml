@@ -1,0 +1,87 @@
+@using System;
+@using System.Linq;
+@using Microsoft.EntityFrameworkCore;
+@using CsharpBelt.Models;
+
+
+
+<a href="logout">Logout</a>
+<table class="table table-striped">
+    <tr>
+        <th>Activity</th>
+        <th>Date & Time</th>
+        <th>Duration</th>
+        <th>Event Coordinator</th>
+        <th>No. of Participants</th>
+        <th>Actions</th>
+    </tr>
+    @foreach(var activity in ViewBag.Activities)
+    {
+        <tr>
+        @{
+            if(activity.Date > DateTime.Now)
+            {
+            <td><a href="activity/@activity.ActivityId">@activity.Name</a></td>
+            <td>@activity.Date.ToString("MMMM dd") at @activity.Time.ToString("h:mm tt")</td>
+            <td>@activity.Duration</td>
+            @foreach(var i in ViewBag.Users)
+            {
+                if(i.UserId == activity.CoordinatorId)
+                {
+                    string coordinator = i.Name;
+                    Console.WriteLine(coordinator);
+                    <td>@coordinator</td>
+                }
+            }
+            <td>@activity.EventInfo.Count</td>
+            <td>
+                @{
+                    bool isGoing = false;
+                    foreach(var participant in activity.EventInfo)
+                    {
+                        if(participant.UserId == ViewBag.User.UserId)
+                        {
+                            isGoing = true;
+                            break;
+                        }
+                    }
+                    if(activity.CoordinatorId == ViewBag.User.UserId)
+                    {
+                        <form action="/delete/@activity.ActivityId" method="post">
+                            <input type="submit" value="Delete" class="btn btn-danger btn-xs" />
+                        </form>
+                    }
+                    else if(isGoing)
+                    {
+                        <a href="/leave/@activity.ActivityId" class="btn btn-warning btn-xs">Leave</a> 
+                    }
+                    else
+                    {
+                        bool already = false;
+                        @foreach(var member in ViewBag.Parts)
+                        {
+                            if(member.UserId == ViewBag.User.UserId && member.ActivityId == activity.ActivityId)
+                            {
+                                already = true;
+                            }
+                        }
+                        if(already)
+                        {
+                            <button type="button" disabled>Join</button>
+                        }
+                        else
+                        {
+                            <a href="/join/@activity.ActivityId" class="btn btn-primary btn-xs">Join</a>
+                        }
+                           
+                    }
+                }
+            </td>
+            }
+        }
+        </tr>
+    }
+</table>
+
+
+<a href="new" class="btn btn-info">Add New Activity</a>
