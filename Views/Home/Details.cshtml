@@ -7,6 +7,12 @@
 
 <h1>@Model.Name</h1>
 
+<!-- HIGHLIGHTED PIECE OF CODE -->
+
+<!-- This is a one of the view pages for a timed exam I completed during boot camp. I had to build an event planner in C#/ASP.NET -->
+<!-- This piece of code allows users to join or leave an event. If the logged in user is not part of an event, they can click on a join button. If they have already joined, the button will have turned into a leave button. -->
+<!-- As straightforward as it seems to me now, I remember really struggling through this part and feeling the pressure of completing a fully functional app in time. It was almost to the point where I was going to settle with just creating two separate buttons and writing logic that disables each button accordingly, which would have cost me a good amount of points.  -->
+<!-- Pushing myself to figure out this small piece of code was one of the most rewarding parts of boot camp. -->
 @{
     bool isGoing = false;
     @foreach(var p in ViewBag.num)
@@ -27,7 +33,7 @@
     }
     
 }
-
+<!-- END OF HIGHLIGHTED PIECE OF CODE -->
 
 
     
